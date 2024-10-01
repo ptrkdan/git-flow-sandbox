@@ -2,11 +2,10 @@ name: Deploy to Production
 
 on:
   release:
-    types: [published, released]
+    types: [released]
 
 jobs:
   deploy:
-    if: github.event.release.prerelease == false
     runs-on: ubuntu-latest
     environment: 
       name: production
