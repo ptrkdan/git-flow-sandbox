@@ -84,18 +84,25 @@ git flow release start release-version
 git flow release finish release-version
 ```
 
-4. Push updates to remote
+4. Back-merge to `dev`
+
+```sh
+git checkout dev
+git merge staging
+```
+
+5. Push updates to remote
 
 ```sh
 git push origin staging dev --tags
 ```
 
-5. On GitHub, create a release from the created tag.
-6. Select the created tag, then generate the release notes.
-7. Check "Set as a pre-release". 
-8. Publish release.
-9. Approve workflow run.
-10. Verify deployment on staging.
+6. On GitHub, create a release from the created tag.
+7. Select the created tag, then generate the release notes.
+8. Check "Set as a pre-release". 
+9. Publish release.
+10. Approve workflow run.
+11. Verify deployment on staging.
 
 ### Staging → Production
 
