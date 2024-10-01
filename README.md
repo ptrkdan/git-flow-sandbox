@@ -1,54 +1,113 @@
-# Astro Starter Kit: Basics
+# git-flow-sandbox
+
+## Installation
+
+Install `git flow` using the following command.
 
 ```sh
-npm create astro@latest -- --template basics
+brew install git-flow
+```
+```sh
+sudo apt-get install git-flow
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Initialization
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+In order to use `git flow` in your repository, you must first initialize it. This is required for every development environment.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+git flow init
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Set the following during initialization:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```sh
+Branch name for production releases:
+> staging
 
-Any static assets, like images, can be placed in the `public/` directory.
+Branch name for "next release" development:
+> dev
 
-## 🧞 Commands
+Feature branches? [feature/]
+> n/a (default)
 
-All commands are run from the root of the project, from a terminal:
+Release branches? [release/]
+> n/a (default)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Hotfix branches? [hotfix/]
+> n/a (default)
 
-## 👀 Want to learn more?
+Support branches [support/]
+> n/a (default)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Version tag prefix []
+> n/a (default)
+```
+
+## Feature Development
+1. Start a feature branch.
+
+```sh
+git flow feature start feature-name
+```
+
+2. Develop, commit, push, and create a PR.
+
+> [!NOTE] You may also use `git flow feature publish feature-branch` to push the local feature branch to the remote repository.
+
+
+3. Once the PR is reviewed and approved, merge to `dev`.
+
+> [!WARNING] Running `git flow feature finish feature-branch` will merge the feature branch **without** creating a pull request, so avoid using it.
+
+## Release
+
+### Dev → Staging
+
+1. Ensure that the local branches are updated.
+
+```sh
+git pull --all
+```
+
+2. Start a release branch.
+
+```sh
+git flow release start release-version
+```
+
+2. Make final changes, such as updating versions, and commit.
+
+3. Finish the release
+
+```sh
+git flow release finish release-version
+```
+
+4. Push updates to remote
+
+```sh
+git push origin staging dev --tags
+```
+
+5. On GitHub, create a release from the created tag.
+6. Select the created tag, then generate the release notes.
+7. Check "Set as a pre-release". 
+8. Publish release.
+9. Approve workflow run.
+10. Verify deployment on staging.
+
+### Staging → Production
+
+1. Merge staging into main.
+
+```sh
+git checkout main
+git pull                     # Ensure that main is up-to-date
+git merge --ff-only staging  # Include tag set in staging release
+git push origin main --tags
+```
+
+2. On GitHub, update the release to a full release (uncheck "Set as a pre-release").
+3. Approve workflow run.
+4. Verify deployment on production.
