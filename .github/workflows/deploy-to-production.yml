@@ -1,0 +1,22 @@
+name: Deploy to Production
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+      name: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+      - name: Deploy to production
+        run: |
+          echo "Deploying to production..."
