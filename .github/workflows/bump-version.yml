@@ -1,0 +1,43 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version level to bump'
+        required: true
+        default: patch
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+      
+
+jobs:
+  create_bump_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+        # https://github.com/orgs/community/discussions/26560#discussioncomment-3252339
+      - name: Create bump PR
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          NEXT_VERSION=`npm version ${{ inputs.bump_type }} --no-commit-hooks --no-git-tag-version -m "Bump version to %s"`
+          git switch -C release/$NEXT_VERSION
+          git commit -am "release: $NEXT_VERSION"
+          git tag -a $NEXT_VERSION -m "release: $NEXT_VERSION"
+          git push -u origin HEAD --follow-tags
+          gh pr create \
+            -t "Release: $NEXT_VERSION" \
+            -b "Bump version to $NEXT_VERSION"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
