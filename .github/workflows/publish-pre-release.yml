@@ -13,7 +13,6 @@ permissions:
   
 jobs:
   publish_pre_release:
-    if: startsWith(github.ref, 'refs/heads/main') && startsWith(github.event.ref, 'refs/heads/release/') 
     runs-on: ubuntu-latest
 
     steps:
