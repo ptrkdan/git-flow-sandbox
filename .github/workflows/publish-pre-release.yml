@@ -1,0 +1,24 @@
+name: Publish Pre-Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'release/**'
+
+jobs:
+  publish_pre_release:
+    if: startsWith(github.ref, 'refs/heads/main') && startsWith(github.event.ref, 'refs/heads/release/') 
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Draft a new release
+        uses: release-drafter/release-drafter@v5
+        with:
+          config-name: .github/release-drafter.yml
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

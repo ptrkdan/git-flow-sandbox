@@ -1,0 +1,19 @@
+name-template: "$RESOLVED_VERSION"
+
+template: |
+  $CHANGES
+categories:
+  - title: "✨ Features"
+    labels:
+      - "feature"
+  - title: "🐛 Bug Fixes"
+    labels:
+      - "fix"
+      - "bug"
+  - title: "🧰 Maintenance"
+    labels:
+      - "chore"
+      - "refactoring"
+
+exclude-labels:
+  - release
