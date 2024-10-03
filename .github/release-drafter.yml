@@ -9,11 +9,9 @@ categories:
   - title: "🐛 Bug Fixes"
     labels:
       - "fix"
-      - "bug"
   - title: "🧰 Maintenance"
     labels:
       - "chore"
-      - "refactoring"
 
 exclude-labels:
   - release
