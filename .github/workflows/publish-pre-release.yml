@@ -7,6 +7,10 @@ on:
     paths:
       - 'release/**'
 
+permissions:
+  contents: write
+  pull-requests: write
+  
 jobs:
   publish_pre_release:
     if: startsWith(github.ref, 'refs/heads/main') && startsWith(github.event.ref, 'refs/heads/release/') 
