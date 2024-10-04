@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: "Release | 4. Deploy to Production"
 
 on:
   release:
