@@ -2,11 +2,10 @@ name: Deploy to Staging
 
 on:
   release:
-    types: [published]
+    types: [prereleased]
 
 jobs:
   deploy:
-    if: github.event.release.prerelease == true
     runs-on: ubuntu-latest
     environment: 
       name: staging
