@@ -1,4 +1,4 @@
-name: PR Labeler
+name: "CI | Label PR"
 
 on:
   pull_request:
