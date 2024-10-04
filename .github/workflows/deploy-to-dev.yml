@@ -1,0 +1,23 @@
+name: "CD | Deploy to Development"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: startsWith(github.head_ref, 'release/') == false
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+      - name: Deploy to staging
+        run: |
+          echo "Deploying to staging..."
