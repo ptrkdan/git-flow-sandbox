@@ -38,6 +38,5 @@ jobs:
         with:
           tag: ${{ steps.retrieve_tag_name.outputs.TAG }}
           prerelease: true
-          publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
