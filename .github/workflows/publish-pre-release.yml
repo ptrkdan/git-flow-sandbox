@@ -19,10 +19,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Draft a new release
-        uses: release-drafter/release-drafter@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          config-name: release-drafter.yml
+          node-version: '16'
+
+      - name: Retrieve tag name
+        id: retrieve_tag_name
+        run: |
+          TAG=$(git tag --contains ${{ github.event.pull_request.head.sha }} || echo "no-tag")
+          echo "TAG=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Draft a new release
+        if: steps.retrieve_tag_name.outputs.TAG != 'no-tag'
+        uses: release-drafter/release-drafter@v6
+        with:
+          tag: ${{ steps.retrieve_tag_name.outputs.TAG }}
           prerelease: true
           publish: true
         env:
